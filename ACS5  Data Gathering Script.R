@@ -157,14 +157,17 @@ Poverty_Qs <- c('GEO_ID', 'NAME', 'S1702_C02_042E', 'S1702_C04_042E', 'S1702_C06
 # GATHER DATA
 ################################################################################
 
-ACS_S2501 <- ACS_data_gatherer(2019, 2021, S2501_Qs, 'subject', 'S2501 Clean Var Names.csv')
-ACS_S2502 <- ACS_data_gatherer(2019, 2021, S2502_Qs, 'subject', 'S2502 Clean Var Names.csv')
-ACS_S2503 <- ACS_data_gatherer(2019, 2021, S2503_Qs, 'subject', 'S2503 Clean Var Names.csv')
-ACS_S2504 <- ACS_data_gatherer(2019, 2021, S2504_Qs, 'subject', 'S2504 Clean Var Names.csv')
-ACS_Poverty <- ACS_data_gatherer(2019, 2021, Poverty_Qs, 'subject', 'Poverty Clean Var Names.csv')
-ACS_Burden <- ACS_data_gatherer(2019, 2021, Burden_Qs, '', 'Burden Clean Var Names.csv')
-ACS_Gross_Rent <- ACS_data_gatherer(2019, 2021, Gross_Rent_Qs, '', 'Gross Rent Clean Var Names.csv')
-ACS_Contract_Rent <- ACS_data_gatherer(2019, 2021, Contract_Rent_Qs, '', 'Contract Rent Clean Var Names.csv')
+startyear = 2017
+endyear = 2021
+
+ACS_S2501 <- ACS_data_gatherer(startyear, endyear, S2501_Qs, 'subject', 'S2501 Clean Var Names.csv')
+ACS_S2502 <- ACS_data_gatherer(startyear, endyear, S2502_Qs, 'subject', 'S2502 Clean Var Names.csv')
+ACS_S2503 <- ACS_data_gatherer(startyear, endyear, S2503_Qs, 'subject', 'S2503 Clean Var Names.csv')
+ACS_S2504 <- ACS_data_gatherer(startyear, endyear, S2504_Qs, 'subject', 'S2504 Clean Var Names.csv')
+ACS_Poverty <- ACS_data_gatherer(startyear, endyear, Poverty_Qs, 'subject', 'Poverty Clean Var Names.csv')
+ACS_Burden <- ACS_data_gatherer(startyear, endyear, Burden_Qs, '', 'Burden Clean Var Names.csv')
+ACS_Gross_Rent <- ACS_data_gatherer(startyear, endyear, Gross_Rent_Qs, '', 'Gross Rent Clean Var Names.csv')
+ACS_Contract_Rent <- ACS_data_gatherer(startyear, endyear, Contract_Rent_Qs, '', 'Contract Rent Clean Var Names.csv')
 
 ################################################################################
 # MERGE DATASETS
