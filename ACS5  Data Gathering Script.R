@@ -1,19 +1,19 @@
-"""
-DATA GATHERING AND PRE-PROCESSING SCRIPT FOR ACS 5-YEAR ESTIMATES
-
-Created on Sat Nov 18 2023
-@author: Michelle.Anderson
-
-This code performs the following tasks:
-1. Set up Census Bureau API parameters
-2. Gather data from Census Bureau API
-3. Merge data sets
-4. Conform and augmet data
-5. Saves out processed data file for analysis
-
-Sources:
-https://www.census.gov/data/developers/data-sets/acs-5year.html
-"""
+#' """
+#' DATA GATHERING AND PRE-PROCESSING SCRIPT FOR ACS 5-YEAR ESTIMATES
+#' 
+#' Created on Sat Nov 18 2023
+#' @author: Michelle.Anderson
+#' 
+#' This code performs the following tasks:
+#' 1. Set up Census Bureau API parameters
+#' 2. Gather data from Census Bureau API
+#' 3. Merge data sets
+#' 4. Conform and augmet data
+#' 5. Saves out processed data file for analysis
+#' 
+#' Sources:
+#' https://www.census.gov/data/developers/data-sets/acs-5year.html
+#' """
 
 ################################################################################
 # LOAD LIBRARIES
@@ -142,6 +142,16 @@ Gross_Rent_Qs <- c('GEO_ID', 'NAME', 'B25063_003E', 'B25063_004E', 'B25063_005E'
                    'B25063_017E', 'B25063_018E', 'B25063_019E', 'B25063_020E', 'B25063_021E',
                    'B25063_022E', 'B25063_023E', 'B25063_024E', 'B25063_025E', 'B25063_026E', 
                    'B25063_027E', 'B25064_001E')
+Contract_Rent_Qs <- c('GEO_ID', 'NAME', 'B25056_003E', 'B25056_004E', 'B25056_005E', 'B25056_006E',
+                      'B25056_007E', 'B25056_008E', 'B25056_009E', 'B25056_010E', 'B25056_011E',
+                      'B25056_012E', 'B25056_013E', 'B25056_014E', 'B25056_015E', 'B25056_016E',
+                      'B25056_017E', 'B25056_018E', 'B25056_019E', 'B25056_020E', 'B25056_021E',
+                      'B25056_022E', 'B25056_023E', 'B25056_024E', 'B25056_025E', 'B25056_026E',
+                      'B25057_001E', 'B25058_001E', 'B25059_001E')
+
+Burden_Qs <- c('GEO_ID', 'NAME', 'B25071_001E')
+
+Poverty_Qs <- c('GEO_ID', 'NAME', 'S1702_C02_042E', 'S1702_C04_042E', 'S1702_C06_042E')
 
 ################################################################################
 # GATHER DATA
@@ -151,7 +161,10 @@ ACS_S2501 <- ACS_data_gatherer(2019, 2021, S2501_Qs, 'subject', 'S2501 Clean Var
 ACS_S2502 <- ACS_data_gatherer(2019, 2021, S2502_Qs, 'subject', 'S2502 Clean Var Names.csv')
 ACS_S2503 <- ACS_data_gatherer(2019, 2021, S2503_Qs, 'subject', 'S2503 Clean Var Names.csv')
 ACS_S2504 <- ACS_data_gatherer(2019, 2021, S2504_Qs, 'subject', 'S2504 Clean Var Names.csv')
+ACS_Poverty <- ACS_data_gatherer(2019, 2021, Poverty_Qs, 'subject', 'Poverty Clean Var Names.csv')
+ACS_Burden <- ACS_data_gatherer(2019, 2021, Burden_Qs, '', 'Burden Clean Var Names.csv')
 ACS_Gross_Rent <- ACS_data_gatherer(2019, 2021, Gross_Rent_Qs, '', 'Gross Rent Clean Var Names.csv')
+ACS_Contract_Rent <- ACS_data_gatherer(2019, 2021, Contract_Rent_Qs, '', 'Contract Rent Clean Var Names.csv')
 
 ################################################################################
 # MERGE DATASETS
@@ -160,7 +173,10 @@ ACS_Gross_Rent <- ACS_data_gatherer(2019, 2021, Gross_Rent_Qs, '', 'Gross Rent C
 housing_data <- left_join(ACS_S2501, ACS_S2502, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
 housing_data <- left_join(housing_data, ACS_S2503, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
 housing_data <- left_join(housing_data, ACS_S2504, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
+housing_data <- left_join(housing_data, ACS_Poverty, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
+housing_data <- left_join(housing_data, ACS_Burden, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
 housing_data <- left_join(housing_data, ACS_Gross_Rent, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
+housing_data <- left_join(housing_data, ACS_Contract_Rent, by=c('state', 'county', 'tract', 'GEO_ID', 'NAME', 'ACS_Year'), suffix = c("",""))
 
 ################################################################################
 # FORMAT DATA
@@ -174,5 +190,5 @@ housing_data[housing_data == -666666666] <- NA  # Define NA values
 # SAVE DATASET
 ################################################################################
 
-write_csv(housing_data, paste0(filepath, "MKE ACS Housing Longitudinal Data.csv")
+write_csv(housing_data, paste0(filepath, "MKE ACS Housing Longitudinal Data.csv"))
 
