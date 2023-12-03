@@ -29,6 +29,8 @@ import io
 # READ IN DATA
 ################################################################################
 
+filepath = ''
+
 # Load American Community Survey 5-Year Estimates CSV file
 ACS_full = pd.read_csv(filepath + 'MKE ACS Housing Data.csv')
 
