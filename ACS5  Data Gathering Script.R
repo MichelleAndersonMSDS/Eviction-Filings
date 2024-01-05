@@ -8,7 +8,7 @@
 #' 1. Set up Census Bureau API parameters
 #' 2. Gather data from Census Bureau API
 #' 3. Merge data sets
-#' 4. Conform and augmet data
+#' 4. Conform and augment data
 #' 5. Saves out processed data file for analysis
 #' 
 #' Sources:
